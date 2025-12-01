@@ -16,8 +16,16 @@ class DecisionDashboard:
     def __init__(self):
         self.app = dash.Dash(__name__)
         self.engine = MonteCarloEngine(n_simulations=5000)
-        self.auth = AuthManager()
-        self.projects_manager = ProjectsManager(self.auth)
+        try:
+            self.auth = AuthManager()
+            self.projects_manager = ProjectsManager(self.auth)
+            self.auth_enabled = True
+        except Exception as e:
+            print(f"⚠️ Autenticación deshabilitada: {e}")
+            self.auth = None
+            self.projects_manager = None
+            self.auth_enabled = False
+        
         self.current_user = None
         self.setup_layout()
         self.setup_callbacks()
@@ -157,6 +165,8 @@ class DecisionDashboard:
             Input('session-store', 'data')
         )
         def display_page(session_data):
+            if not self.auth_enabled:
+                return self.dashboard_content()  # Modo sin autenticación
             if not session_data:
                 return self.login_layout()
             return self.main_dashboard_layout()
