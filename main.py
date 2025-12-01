@@ -7,6 +7,11 @@ Descripción: Herramienta para gerentes que simula escenarios de negocio bajo in
 
 import sys
 import os
+from dotenv import load_dotenv
+
+# Cargar variables de entorno
+load_dotenv()
+
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 from src.ui.dashboard import DecisionDashboard
@@ -100,7 +105,7 @@ def main():
     try:
         dashboard = DecisionDashboard()
         port = int(os.environ.get('PORT', 8050))
-        dashboard.run_server(debug=False, port=port, host='0.0.0.0')
+        dashboard.run_server(debug=False, port=port)
     except KeyboardInterrupt:
         print("\n👋 Sistema detenido por el usuario")
     except Exception as e:
