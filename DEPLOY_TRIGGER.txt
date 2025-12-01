@@ -1,0 +1,12 @@
+Deploy Trigger - Sistema Monte Carlo v2.1.0
+
+✅ Base de datos Neon corregida
+✅ Tabla users con columna username
+✅ Sistema de autenticación listo
+✅ Login funcional
+
+Credenciales:
+- Usuario: admin
+- Contraseña: admin123
+
+Timestamp: $(date)
