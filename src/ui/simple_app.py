@@ -444,45 +444,45 @@ class SimpleApp:
             # Lista de Usuarios
             html.Div(id='users-list')
         ])
-    
-    @self.app.callback(
-        Output('users-list', 'children'),
-        Input('users-data', 'data')
-    )
-    def update_users_list(users_data):
-        if not users_data:
-            return html.P("No hay usuarios")
         
-        users_cards = []
-        for user in users_data:
-            role_color = {'admin': '#e74c3c', 'manager': '#f39c12', 'user': '#27ae60'}.get(user['role'], '#95a5a6')
+        @self.app.callback(
+            Output('users-list', 'children'),
+            Input('users-data', 'data')
+        )
+        def update_users_list(users_data):
+            if not users_data:
+                return html.P("No hay usuarios")
             
-            card = html.Div([
-                html.Div([
-                    html.H4(f"👤 {user['username']}", style={'margin': 0, 'color': '#2c3e50'}),
-                    html.P(f"📧 {user['email']}", style={'margin': '5px 0', 'color': '#7f8c8d'}),
-                    html.Span(user['role'].upper(), 
-                              style={'backgroundColor': role_color, 'color': 'white', 'padding': '3px 8px', 'borderRadius': '12px', 'fontSize': '12px'})
-                ], style={'flex': '1'}),
-                html.Div([
-                    html.Button("✏️ Editar", 
-                               id={'type': 'edit-user', 'index': user['id']},
-                               style={'padding': '5px 10px', 'backgroundColor': '#3498db', 'color': 'white', 'border': 'none', 'borderRadius': '3px', 'marginRight': '5px', 'cursor': 'pointer'}),
-                    html.Button("🗑️ Eliminar", 
-                               id={'type': 'delete-user', 'index': user['id']},
-                               style={'padding': '5px 10px', 'backgroundColor': '#e74c3c', 'color': 'white', 'border': 'none', 'borderRadius': '3px', 'cursor': 'pointer'})
-                ])
-            ], style={
-                'display': 'flex', 'alignItems': 'center', 'justifyContent': 'space-between',
-                'backgroundColor': 'white', 'padding': '15px', 'borderRadius': '8px', 
-                'marginBottom': '10px', 'boxShadow': '0 2px 4px rgba(0,0,0,0.1)'
-            })
-            users_cards.append(card)
-        
-        return html.Div([
-            html.H3(f"📋 Lista de Usuarios ({len(users_data)})"),
-            html.Div(users_cards)
-        ])
+            users_cards = []
+            for user in users_data:
+                role_color = {'admin': '#e74c3c', 'manager': '#f39c12', 'user': '#27ae60'}.get(user['role'], '#95a5a6')
+                
+                card = html.Div([
+                    html.Div([
+                        html.H4(f"👤 {user['username']}", style={'margin': 0, 'color': '#2c3e50'}),
+                        html.P(f"📧 {user['email']}", style={'margin': '5px 0', 'color': '#7f8c8d'}),
+                        html.Span(user['role'].upper(), 
+                                  style={'backgroundColor': role_color, 'color': 'white', 'padding': '3px 8px', 'borderRadius': '12px', 'fontSize': '12px'})
+                    ], style={'flex': '1'}),
+                    html.Div([
+                        html.Button("✏️ Editar", 
+                                   id={'type': 'edit-user', 'index': user['id']},
+                                   style={'padding': '5px 10px', 'backgroundColor': '#3498db', 'color': 'white', 'border': 'none', 'borderRadius': '3px', 'marginRight': '5px', 'cursor': 'pointer'}),
+                        html.Button("🗑️ Eliminar", 
+                                   id={'type': 'delete-user', 'index': user['id']},
+                                   style={'padding': '5px 10px', 'backgroundColor': '#e74c3c', 'color': 'white', 'border': 'none', 'borderRadius': '3px', 'cursor': 'pointer'})
+                    ])
+                ], style={
+                    'display': 'flex', 'alignItems': 'center', 'justifyContent': 'space-between',
+                    'backgroundColor': 'white', 'padding': '15px', 'borderRadius': '8px', 
+                    'marginBottom': '10px', 'boxShadow': '0 2px 4px rgba(0,0,0,0.1)'
+                })
+                users_cards.append(card)
+            
+            return html.Div([
+                html.H3(f"📋 Lista de Usuarios ({len(users_data)})"),
+                html.Div(users_cards)
+            ])
     
     def run_server(self, debug=False, port=8050):
         self.app.run(debug=debug, port=port, host='0.0.0.0')
