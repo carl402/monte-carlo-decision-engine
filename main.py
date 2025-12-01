@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Sistema de Asistente de Toma de Decisiones Empresariales con Simulaciones Monte Carlo
-Autor: Sistema de IA
+
 Descripción: Herramienta para gerentes que simula escenarios de negocio bajo incertidumbre económica
 """
 
@@ -14,14 +14,14 @@ load_dotenv()
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-from src.ui.dashboard import DecisionDashboard
+from src.ui.new_dashboard import MonteCarloApp
 from src.simulation.monte_carlo_engine import MonteCarloEngine
 from src.models.business_scenario import BusinessScenario
 from src.utils.statistics import StatisticsCalculator
 
 def demo_simulation():
     """Ejecuta una simulación de demostración"""
-    print("🎯 Sistema de Decisiones Empresariales - Monte Carlo")
+    print("Sistema de Decisiones Empresariales - Monte Carlo")
     print("=" * 60)
     
     # Crear escenarios de ejemplo
@@ -62,10 +62,10 @@ def demo_simulation():
     engine = MonteCarloEngine(n_simulations=10000)
     results = []
     
-    print("\n📊 Ejecutando simulaciones Monte Carlo...")
+    print("\nEjecutando simulaciones Monte Carlo...")
     
     for scenario in scenarios:
-        print(f"\n🔄 Simulando: {scenario.name}")
+        print(f"\n Simulando: {scenario.name}")
         result = engine.simulate_scenario(scenario)
         results.append(result)
         
@@ -77,7 +77,7 @@ def demo_simulation():
         print(f"   VaR 95%: ${metrics['var_95']:,.0f}")
     
     # Comparación de escenarios
-    print("\n📈 Comparación de Escenarios:")
+    print("\nComparación de Escenarios:")
     print("=" * 40)
     comparison = StatisticsCalculator.compare_scenarios(results)
     
@@ -88,28 +88,28 @@ def demo_simulation():
         print(f"   Prob. Éxito: {row['probabilidad_exito']:.1f}%")
         print()
     
-    print("✅ Simulación completada. Iniciando dashboard web...")
+    print("Simulación completada. Iniciando dashboard web...")
     return results
 
 def main():
     """Función principal"""
-    print("🚀 Iniciando Sistema de Decisiones Empresariales")
+    print("Iniciando Sistema de Decisiones Empresariales")
     
     # Ejecutar demo
     demo_results = demo_simulation()
     
     # Iniciar dashboard web
-    print("\n🌐 Iniciando Dashboard Web en http://localhost:8050")
+    print("\nIniciando Dashboard Web en http://localhost:8050")
     print("   Presione Ctrl+C para detener el servidor")
     
     try:
-        dashboard = DecisionDashboard()
+        dashboard = MonteCarloApp()
         port = int(os.environ.get('PORT', 8050))
         dashboard.run_server(debug=False, port=port)
     except KeyboardInterrupt:
-        print("\n👋 Sistema detenido por el usuario")
+        print("\nSistema detenido por el usuario")
     except Exception as e:
-        print(f"\n❌ Error al iniciar dashboard: {e}")
+        print(f"\nError al iniciar dashboard: {e}")
         print("💡 Asegúrese de tener instaladas todas las dependencias:")
         print("   pip install -r requirements.txt")
 
